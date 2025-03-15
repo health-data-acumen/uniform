@@ -1,0 +1,20 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block page_title %}
+    {{ 'title.admin.form.endpoint.new'|trans }}
+{% endblock %}
+
+{% block page_actions %}
+    <button type="submit" form="endpoint-form" class="btn btn-primary">
+        {{ 'action.form.create'|trans }}
+    </button>
+
+    {{ parent() }}
+{% endblock %}
+
+{% block page_content %}
+    {{ form_start(endpointForm, {'attr': {'id': 'endpoint-form'}}) }}
+        {{ form_widget(endpointForm) }}
+    {{ form_end(endpointForm) }}
+{% endblock %}
+

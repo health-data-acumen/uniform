@@ -1,0 +1,44 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}
+    {{ 'title.admin.form.endpoint.list'|trans }}
+{% endblock %}
+
+{% block page_content %}
+    <div class="max-w-(--breakpoint-xl) space-y-4">
+        <div class="flex items-start justify-between flex-wrap">
+            <h2 class="text-2xl font-bold">{{ 'title.admin.form.endpoint.list'|trans }}</h2>
+
+            <a href="{{ path('app_admin_form_endpoint_new') }}" class="btn btn-primary" data-turbo-frame="turbo-modal">
+                {{ 'action.form.endpoint.new'|trans }}
+            </a>
+        </div>
+
+        <twig:Table:Root>
+            <twig:Table:Header>
+                <twig:Table:Head>{{ 'label.form.endpoint.name'|trans }}</twig:Table:Head>
+                <twig:Table:Head>{{ 'label.form.endpoint.url'|trans }}</twig:Table:Head>
+                <twig:Table:Head>{{ 'label.form.endpoint.submissions'|trans }}</twig:Table:Head>
+                <twig:Table:Head>{{ 'label.form.endpoint.actions'|trans }}</twig:Table:Head>
+            </twig:Table:Header>
+
+            <twig:Table:Body>
+                {% for form in endpoints %}
+                    <twig:Table:Row>
+                        <twig:Table:Cell>{{ form.name }}</twig:Table:Cell>
+                        <twig:Table:Cell>{{ 'https://example.com' }}</twig:Table:Cell>
+                        <twig:Table:Cell>{{ 0 }}</twig:Table:Cell>
+                        <twig:Table:Cell>
+                            <a href="#">{{ 'label.form.endpoint.edit'|trans }}</a>
+                            <a href="#">{{ 'label.form.endpoint.delete'|trans }}</a>
+                        </twig:Table:Cell>
+                    </twig:Table:Row>
+                {% else %}
+                    <twig:Table:Row>
+                        <twig:Table:Cell colspan="4" class="text-center">{{ 'label.form.endpoint.no_endpoints'|trans }}</twig:Table:Cell>
+                    </twig:Table:Row>
+                {% endfor %}
+            </twig:Table:Body>
+        </twig:Table:Root>
+    </div>
+{% endblock %}

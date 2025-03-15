@@ -1,0 +1,71 @@
+{% extends 'layout.html.twig' %}
+
+{%- block title -%}
+    {{- block('page_title') -}} | {{ 'admin.title.dashboard'|trans -}}
+{%- endblock -%}
+
+{# set menu = knp_menu_get('dashboard.default') #}
+
+{% block body %}
+    <div class="min-h-screen grid grid-rows-[auto_1fr]">
+        <header>
+            <div class="max-w-(--breakpoint-xl) mx-auto flex items-center justify-between py-2">
+                <h1 class="text-2xl font-bold">UniForm</h1>
+                <a href="#">Logout</a>
+            </div>
+
+            <nav>
+
+            </nav>
+        </header>
+
+        <main>
+            <div class="max-w-(--breakpoint-lg) mx-auto py-4">
+                {% block content %}
+                    {% block page_header %}
+                    {% endblock %}
+
+                    {% block page_content %}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+
+            <div data-controller="turbo-modal">
+                <twig:Modal:Dialog
+                    data-turbo-modal-target="dialog"
+                    class="slide-over:m-0 slide-over:ml-auto w-max border border-neutral-200 bg-white rounded-lg  backdrop:bg-neutral-900/45 backdrop:backdrop-blur-xs"
+                >
+                    <turbo-frame id="turbo-modal" data-turbo-modal-target="content"></turbo-frame>
+                </twig:Modal:Dialog>
+
+                <template data-turbo-modal-target="placeholder">
+                    <div class="flex items-center justify-center min-h-32 p-6 w-96">
+                        <p class="text-lg text-neutral-700">
+                            {{ ux_icon('custom:spinner', {'class': 'size-8 animate-spin'}) }}
+                            <span class="sr-only">{{ 'admin.modal.loading'|trans }}</span>
+                        </p>
+                    </div>
+                </template>
+            </div>
+
+            <dialog
+                data-turbo-confirm-dialog
+                class="m-auto w-max border border-neutral-200 bg-white rounded-lg  backdrop:bg-neutral-900/45 backdrop:backdrop-blur-xs"
+            >
+                <div class="w-md py-4 px-6">
+                    <h2 data-part="title" class="text-lg font-semibold mb-2"></h2>
+                    <div data-part="message" class="text-sm text-neutral-500"></div>
+
+                    <div class="flex gap-2 items-center justify-end mt-3">
+                        <button data-behaviour="cancel" class="btn" data-variant="secondary">Cancel</button>
+                        <button data-behaviour="confirm" class="btn" data-variant="primary">Confirm</button>
+                    </div>
+                </div>
+            </dialog>
+
+            <div class="pointer-events-none items-center fixed top-0 inset-x-0 px-6 py-8 flex flex-col gap-2 z-20" id="flash-container">
+                {{ block('content', 'admin/partials/_flashes.html.twig') }}
+            </div>
+        </main>
+    </div>
+{% endblock %}

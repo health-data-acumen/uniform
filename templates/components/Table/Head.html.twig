@@ -1,0 +1,5 @@
+{# @var attributes \Symfony\UX\TwigComponent\ComponentAttributes #}
+
+<th class="{{ tw_merge('px-4 py-3 text-left align-middle font-medium text-neutral-600', attributes.render('class')) }}" {{ attributes }}>
+    {% block content %}{% endblock %}
+</th>

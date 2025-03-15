@@ -1,0 +1,40 @@
+{% set isTurboModal = true %}
+
+<turbo-frame id="turbo-modal">
+    <div class="{{ modalWidth|default('w-lg group-slide-over:w-md') }} relative">
+        {% block main %}
+            {% block page_header %}
+                <header class="flex gap-2 items-center justify-between p-4 bg-white border-b border-neutral-200">
+					<div class="space-y-1">
+						<h1 class="text-xl font-medium">
+							{% block page_title %}{% endblock %}
+						</h1>
+
+						{% if block('page_subtitle') is defined %}
+							<p class="text-neutral-600">{{ block('page_subtitle') }}</p>
+						{% endif %}
+					</div>
+
+                    <button type="button" data-action="turbo-modal#close" class="absolute top-4 right-4 btn btn-ghost p-1">
+                        {{ ux_icon('heroicons:x-mark', {'class': 'size-4 [&>*]:stroke-3'}) }}
+                        <span class="sr-only">{{ 'action.close'|trans }}</span>
+                    </button>
+                </header>
+            {% endblock %}
+
+            <div class="p-4">
+                {% block page_content %}{% endblock %}
+            </div>
+
+            {% block page_footer %}
+                <footer class="flex gap-2 items-center justify-end bg-white pb-4 px-4 group-slide-over:justify-start">
+                    {% block page_actions %}
+                        <button data-action="turbo-modal#close" class="btn btn-secondary">
+                            {{ 'action.cancel'|trans }}
+                        </button>
+                    {% endblock %}
+                </footer>
+            {% endblock %}
+        {% endblock %}
+    </div>
+</turbo-frame>

@@ -1,0 +1,7 @@
+{# @var attributes \Symfony\UX\TwigComponent\ComponentAttributes #}
+
+<div class="overflow-auto rounded-lg border border-neutral-200">
+    <table {{ attributes.defaults({'class': 'w-full table bg-white text-sm text-neutral-700'}) }}>
+        {% block content %}{% endblock %}
+    </table>
+</div>

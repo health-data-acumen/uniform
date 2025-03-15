@@ -1,0 +1,120 @@
+{% use 'tailwind_2_layout.html.twig' %}
+
+{% block form_label %}
+    {%- set label_class = label_class|default('form-label') -%}
+    {{- parent() -}}
+{% endblock %}
+
+{% block form_help %}
+    {%- set help_class = 'text-neutral-600 text-sm' -%}
+    {{- parent() -}}
+{% endblock %}
+
+{% block form_errors %}
+	{%- if errors|length > 0 -%}
+		{% if errors|length == 1 %}
+			<p class="{{ error_item_class|default('text-red-600 text-sm') }} my-2">{{ errors[0].message }}</p>
+		{% else %}
+			<ul class="list-disc list-outside pl-4 space-y-2 my-2">
+				{%- for error in errors -%}
+					<li class="{{ error_item_class|default('text-red-600 text-sm') }}">{{ error.message }}</li>
+				{%- endfor -%}
+			</ul>
+		{% endif %}
+	{%- endif -%}
+{% endblock %}
+
+{% block widget_attributes %}
+    {% set widget_class = widget_class|default('form-control') %}
+    {# set widget_disabled_class = widget_disabled_class|default('cursor-not-allowed bg-neutral-100 border-neutral-300 text-neutral-600') #}
+    {% set widget_errors_class = widget_errors_class|default('border-red-500 focus:ring-red-600 focus:border-red-600') %}
+
+    {% if not valid %}
+        {% set attr = attr|merge({'aria-invalid': 'true'}) %}
+    {% endif %}
+
+    {{- parent() -}}
+{% endblock %}
+
+{%- block form_row -%}
+    {%- set row_attr = row_attr|merge({ class: tw_merge('mb-4 dialog:last-of-type:mb-0 space-y-1 w-full', row_attr.class|default('')) }) -%}
+    {%- set widget_attr = {} -%}
+
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+
+    <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        {{- form_label(form) -}}
+        {{- form_widget(form, widget_attr) -}}
+        {{- form_help(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock form_row -%}
+
+{%- block choice_widget_expanded -%}
+    {%- set attr = attr|merge({ class: attr.class|default('mt-2 space-y-1.5') }) -%}
+
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <div class="flex items-center space-x-2">
+                {{- form_widget(child) -}}
+                {{- form_label(child, null, { translation_domain: choice_translation_domain, required: false }) -}}
+            </div>
+        {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}
+
+{% block checkbox_row %}
+    {%- set row_attr = row_attr|merge({ class: row_attr.class|default(row_class|default('mb-4')) }) -%}
+    {%- set widget_attr = (widget_attr|default({}))|merge({ class: widget_class|default('form-checkbox') }) -%}
+
+    {%- if help is not empty -%}
+        {%- set widget_attr = widget_attr|merge({'aria-describedby': id ~"_help"}) -%}
+    {%- endif -%}
+
+    <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        <div class="inline-flex items-start place-items-start gap-2">
+            {{- form_widget(form, {attr: widget_attr}) -}}
+            {{- form_label(form, null, {'label_class': label_class|default('inline-block -mt-1 font-medium text-neutral-700')}) -}}
+        </div>
+
+        {{- form_help(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+
+{% block checkbox_widget %}
+    {% set widget_class = 'form-checkbox' %}
+    {{- parent() -}}
+{% endblock %}
+
+{% block radio_widget %}
+    {% set widget_class = 'form-radio' %}
+    {{- parent() -}}
+{% endblock %}
+
+{% block url_widget %}
+    {% set type = 'url' %}
+
+    {{- parent() -}}
+{% endblock %}
+
+{% block money_widget %}
+    {% set prepend = not (money_pattern starts with '{{') %}
+    {% set append = not (money_pattern ends with '}}') %}
+
+    {% if prepend or append %}
+        <div class="relative {{ group_class|default('') }}">
+            {% set widget_class = 'form-control ' ~ (prepend ? 'pl-12' : 'pr-12') %}
+
+            <span class="pointer-events-none absolute {{ prepend ? 'left-0' : 'right-0' }} flex items-center px-3 inset-y-0 text-neutral-500">
+                {{ money_pattern|form_encode_currency }}
+            </span>
+
+            {{- block('form_widget_simple') -}}
+        </div>
+    {% else %}
+        {{- block('form_widget_simple') -}}
+    {% endif %}
+{% endblock %}

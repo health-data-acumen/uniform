@@ -1,0 +1,9 @@
+{# @var attributes \Symfony\UX\TwigComponent\ComponentAttributes #}
+
+<dialog
+	data-modal-target="dialog"
+	{{ attributes.without('class') }}
+	class="{{ tw_merge('group m-auto w-max border border-neutral-200 bg-white rounded-lg  backdrop:bg-neutral-900/45 backdrop:backdrop-blur-xs', attributes.render('class')) }}"
+>
+	{% block content %}{% endblock %}
+</dialog>

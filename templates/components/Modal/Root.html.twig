@@ -1,0 +1,6 @@
+{# @var attributes \Symfony\UX\TwigComponent\ComponentAttributes #}
+
+<div {{ attributes.defaults(stimulus_controller('modal'), stimulus_action('modal', 'close', 'turbo:before-cache@document')).without('class') }}>
+	{% block trigger %}{% endblock %}
+	{% block content %}{% endblock %}
+</div>

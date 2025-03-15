@@ -1,0 +1,39 @@
+action:
+    cancel: Cancel
+    close: Close
+    form:
+        create: 'Create Form'
+        endpoint:
+            new: 'New Form Endpoint'
+admin:
+    modal:
+        loading: Loading...
+    title:
+        dashboard: Dashboard
+flash:
+    form_endpoint:
+        created: 'Form endpoint created.'
+label:
+    form:
+        description: Description
+        endpoint:
+            actions: Actions
+            delete: Delete
+            edit: Edit
+            name: Name
+            no_endpoints: 'You have not created any form endpoints yet.'
+            submissions: Submissions
+            url: 'Endpoint URL'
+        name: Name
+    form_field:
+        label: Label
+        name: Name
+        required: 'Is Required?'
+        type: Type
+title:
+    admin:
+        form:
+            endpoint:
+                new: 'New Form Endpoint'
+                list: 'Form Endpoints'
+    welcome: __title.welcome

@@ -25,4 +25,14 @@ return [
     '@hotwired/turbo' => [
         'version' => '8.0.13',
     ],
+    'stimulus-use' => [
+        'version' => '0.52.3',
+    ],
+    '@fontsource-variable/inter' => [
+        'version' => '5.2.5',
+    ],
+    '@fontsource-variable/inter/index.min.css' => [
+        'version' => '5.2.5',
+        'type' => 'css',
+    ],
 ];

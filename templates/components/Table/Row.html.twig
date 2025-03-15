@@ -1,0 +1,5 @@
+{# @var attributes \Symfony\UX\TwigComponent\ComponentAttributes #}
+
+<tr class="{{ tw_merge('border-b border-neutral-200 transition-colors data-[state=selected]:bg-neutral-100', attributes.render('class')) }}">
+    {% block content %}{% endblock%}
+</tr>

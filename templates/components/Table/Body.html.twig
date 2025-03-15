@@ -1,0 +1,5 @@
+{# @var attributes \Symfony\UX\TwigComponent\ComponentAttributes #}
+
+<tbody class="{{ tw_merge('[&_tr:last-child]:border-0', attributes.render('class')) }}" {{ attributes }}>
+{% block content %}{% endblock %}
+</tbody>

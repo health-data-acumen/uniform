@@ -1,0 +1,39 @@
+{# @var attributes \Symfony\UX\TwigComponent\ComponentAttributes #}
+
+{% props type = 'success', title = null, message = null, autoClose = true, position = 'top-right'  %}
+
+{% set alert = html_cva(
+    variants: {
+        'type': {
+            'success': 'text-green-600',
+            'warning': 'text-yellow-500',
+            'error': 'text-red-600',
+            'info': 'text-blue-600'
+        },
+    },
+) %}
+
+{% set icons = {
+    'success': 'heroicons:check-circle-solid',
+    'warning': 'heroicons:exclamation-triangle-solid',
+    'error': 'heroicons:x-circle-solid',
+    'info': 'heroicons:information-circle-solid',
+} %}
+
+<div role="alert"
+     data-controller="toast"
+     class="toast hidden bg-white gap-2 items-start"
+     data-toast-auto-close-value="{{ autoClose ? 'true' : 'false' }}"
+     data-toast-position-value="{{ position }}"
+     data-turbo-temporary
+>
+    <twig:UX:Icon name="{{ icons[type] }}" class="{{ alert.apply({ type }, 'size-5 shrink-0 mt-0.5') }}" />
+    <div class="grow" data-toast-part="content">
+        <p class="{{ alert.apply({ type }, 'font-semibold mb-1') }}">{{ title }}</p>
+        <p class="text-neutral-500 font-normal">{{ message }}</p>
+    </div>
+
+    <button aria-label="{{ 'action.close'|trans }}" data-action="toast#close" class="shrink-0 ml-3">
+        <twig:UX:Icon name="heroicons:x-mark-20-solid" class="size-4" />
+    </button>
+</div>
