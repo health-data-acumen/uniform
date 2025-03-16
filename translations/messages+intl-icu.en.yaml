@@ -1,10 +1,13 @@
 action:
+    admin:
+        back_to_list: 'Back to List'
     cancel: Cancel
     close: Close
     form:
         create: 'Create Form'
         endpoint:
             new: 'New Form Endpoint'
+    save: Save
 admin:
     modal:
         loading: Loading...
@@ -13,12 +16,19 @@ admin:
 flash:
     form_endpoint:
         created: 'Form endpoint created.'
+        updated: 'Form endpoint updated.'
 label:
+    admin:
+        form:
+            endpoint:
+                settings: Settings
+                submissions: Submissions
     form:
         description: Description
         endpoint:
             actions: Actions
             delete: Delete
+            details: Details
             edit: Edit
             name: Name
             no_endpoints: 'You have not created any form endpoints yet.'
@@ -34,6 +44,8 @@ title:
     admin:
         form:
             endpoint:
-                new: 'New Form Endpoint'
                 list: 'Form Endpoints'
-    welcome: __title.welcome
+                new: 'New Form Endpoint'
+                settings: Settings
+                submissions: Submissions
+    welcome: Welcome to UniForm!

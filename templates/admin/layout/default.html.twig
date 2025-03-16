@@ -8,8 +8,8 @@
 
 {% block body %}
     <div class="min-h-screen grid grid-rows-[auto_1fr]">
-        <header>
-            <div class="max-w-(--breakpoint-xl) mx-auto flex items-center justify-between py-2">
+        <header class="border-b border-neutral-200 shadow-xs">
+            <div class="max-w-(--breakpoint-xl) mx-auto flex items-center justify-between py-3">
                 <h1 class="text-2xl font-bold">UniForm</h1>
                 <a href="#">Logout</a>
             </div>
@@ -20,9 +20,14 @@
         </header>
 
         <main>
-            <div class="max-w-(--breakpoint-lg) mx-auto py-4">
+            <div class="max-w-(--breakpoint-lg) mx-auto py-4 space-y-4">
                 {% block content %}
                     {% block page_header %}
+                        <div class="py-3 border-b border-neutral-200">
+                            {% block page_title_container %}
+                                <h2 class="text-3xl font-bold">{% block page_title %}{% endblock %}</h2>
+                            {% endblock %}
+                        </div>
                     {% endblock %}
 
                     {% block page_content %}

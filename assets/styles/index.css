@@ -107,10 +107,6 @@
   .container {
     @apply mx-auto;
   }
-
-  .link {
-    @apply text-primary-600 underline;
-  }
 }
 
 @layer components {
@@ -152,9 +148,13 @@
 
 /* UI Components */
 @layer components {
+  .link {
+    @apply text-primary-600 underline;
+  }
+
   .btn {
     @apply relative inline-flex gap-2 items-center justify-center
-    whitespace-nowrap rounded-md border border-neutral-300 px-3 py-1.5
+    whitespace-nowrap rounded-md border border-neutral-300 px-4 py-2
     shadow-xs cursor-pointer
     text-center text-sm font-medium
     transition-colors duration-100 ease-in-out

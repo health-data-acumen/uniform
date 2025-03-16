@@ -29,6 +29,7 @@ class FormDefinitionType extends AbstractType
             ])
         ;
 
+        /*
         if ($formDefinition?->getId()) {
             $builder
                 ->add('fields', CollectionType::class, [
@@ -39,6 +40,7 @@ class FormDefinitionType extends AbstractType
                 ])
             ;
         }
+        */
     }
 
     public function configureOptions(OptionsResolver $resolver): void

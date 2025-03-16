@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+
 use function Symfony\Component\Translation\t;
 
 final class EndpointController extends AbstractController
@@ -42,6 +43,37 @@ final class EndpointController extends AbstractController
 
         return $this->render('admin/form/endpoint/new.html.twig', [
             'endpointForm' => $endpointForm->createView(),
+        ]);
+    }
+
+    #[Route('/admin/form/endpoints/{id}/submissions', name: 'app_admin_form_endpoint_submission_list', methods: ['GET', 'POST'])]
+    public function submissions(FormDefinition $formDefinition): Response
+    {
+        return $this->render('admin/form/endpoint/submissions.html.twig', [
+            'endpoint' => $formDefinition,
+            'submissions' => [],
+        ]);
+    }
+
+    #[Route('/admin/form/endpoints/{id}/settings', name: 'app_admin_form_endpoint_settings', methods: ['GET', 'POST'])]
+    public function settings(FormDefinition $formDefinition, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $endpointForm = $this->createForm(FormDefinitionType::class, $formDefinition, [
+            'action' => $this->generateUrl('app_admin_form_endpoint_settings', ['id' => $formDefinition->getId()]),
+        ]);
+        $endpointForm->handleRequest($request);
+
+        if ($endpointForm->isSubmitted() && $endpointForm->isValid()) {
+            $entityManager->flush();
+
+            $this->addFlash('success', t('flash.form_endpoint.updated'));
+
+            return $this->redirectToRoute('app_admin_form_endpoint_settings', ['id' => $formDefinition->getId()]);
+        }
+
+        return $this->render('admin/form/endpoint/settings.html.twig', [
+            'endpointForm' => $endpointForm,
+            'endpoint' => $formDefinition,
         ]);
     }
 }

@@ -1,15 +1,13 @@
 {% extends 'admin/layout.html.twig' %}
 
-{% block title %}
+{% block page_title %}
     {{ 'title.admin.form.endpoint.list'|trans }}
 {% endblock %}
 
 {% block page_content %}
     <div class="max-w-(--breakpoint-xl) space-y-4">
         <div class="flex items-start justify-between flex-wrap">
-            <h2 class="text-2xl font-bold">{{ 'title.admin.form.endpoint.list'|trans }}</h2>
-
-            <a href="{{ path('app_admin_form_endpoint_new') }}" class="btn btn-primary" data-turbo-frame="turbo-modal">
+            <a href="{{ path('app_admin_form_endpoint_new') }}" class="btn btn-primary ml-auto" data-turbo-frame="turbo-modal">
                 {{ 'action.form.endpoint.new'|trans }}
             </a>
         </div>
@@ -29,7 +27,10 @@
                         <twig:Table:Cell>{{ 'https://example.com' }}</twig:Table:Cell>
                         <twig:Table:Cell>{{ 0 }}</twig:Table:Cell>
                         <twig:Table:Cell>
-                            <a href="#">{{ 'label.form.endpoint.edit'|trans }}</a>
+                            <a href="{{ path('app_admin_form_endpoint_submission_list', {'id': form.id}) }}" class="link font-medium no-underline">
+                                {{ 'label.form.endpoint.details'|trans }}
+                            </a>
+
                             <a href="#">{{ 'label.form.endpoint.delete'|trans }}</a>
                         </twig:Table:Cell>
                     </twig:Table:Row>
