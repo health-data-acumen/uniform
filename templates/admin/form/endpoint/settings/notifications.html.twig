@@ -1,47 +1,26 @@
-{% extends 'admin/layout.html.twig' %}
+{% extends 'admin/form/endpoint/settings.html.twig' %}
 
-{% block page_title_container %}
-    <a href="{{ path('app_admin_form_endpoint_list') }}"
-       class="inline-flex items-center gap-2 mb-4 font-medium text-sm text-neutral-600 hover:text-neutral-700"
-    >
-        &leftarrow; {{ 'action.admin.back_to_list'|trans }}
-    </a>
+{% block settings_content %}
+    <h3 class="text-2xl font-bold mb-3">{{ 'title.admin.form.endpoint.settings.notifications'|trans }}</h3>
 
-    {{ parent() }}
-{% endblock %}
+    {% for name, settingsForm in settingsForms %}
+        <div class="grid @3xl:grid-cols-5 gap-4 rounded-lg bg-slate-50 p-1 border border-neutral-200">
+            <div class="col-span-2 px-4 py-2">
+                <h4 class="text-xl font-bold">{{ settingsForm.vars.label ? settingsForm.vars.label|trans : name|title }}</h4>
+                {% if settingsForm.vars.help is not null %}
+                    <p class="text-neutral-500 text-sm">{{ settingsForm.vars.help|trans }}</p>
+                {% endif %}
+            </div>
 
-{% block page_title %}
-    {{ endpoint.name }}
-{% endblock %}
+            <div class="col-span-3 p-4 rounded-md border border-neutral-200 bg-white">
+                {{ form_start(settingsForm) }}
+                {{ form_widget(settingsForm) }}
 
-{% block page_content %}
-    <div>
-        {{ include('admin/form/endpoint/_navbar.html.twig') }}
-
-        <div class="space-y-4 mt-4">
-            <h3 class="text-2xl font-bold mb-3">{{ 'title.admin.form.endpoint.settings.notifications'|trans }}</h3>
-
-            {% for name, settingsForm in settingsForms %}
-                {% dump settingsForm %}
-                <div class="grid grid-cols-5 gap-4 rounded-lg bg-slate-50 p-1 border border-neutral-200">
-                    <div class="col-span-2 px-4 py-2">
-                        <h4 class="text-xl font-bold">{{ settingsForm.vars.label ? settingsForm.vars.label|trans : name|title }}</h4>
-                        {% if settingsForm.vars.help is not null %}
-                            <p class="text-neutral-500 text-sm">{{ settingsForm.vars.help|trans }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div class="col-span-3 p-4 rounded-md border border-neutral-200 bg-white">
-                        {{ form_start(settingsForm) }}
-                            {{ form_widget(settingsForm) }}
-
-                            <button class="btn btn-primary" type="submit">
-                                {{ 'action.save'|trans }}
-                            </button>
-                        {{ form_end(settingsForm) }}
-                    </div>
-                </div>
-            {% endfor %}
+                <button class="btn btn-primary" type="submit">
+                    {{ 'action.save'|trans }}
+                </button>
+                {{ form_end(settingsForm) }}
+            </div>
         </div>
-    </div>
+    {% endfor %}
 {% endblock %}

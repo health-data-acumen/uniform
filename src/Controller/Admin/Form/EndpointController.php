@@ -3,7 +3,7 @@
 namespace App\Controller\Admin\Form;
 
 use App\Entity\FormDefinition;
-use App\Entity\FormNotificationSettings;
+use App\Entity\Settings\NotificationSettings;
 use App\Form\FormDefinitionType;
 use App\Repository\FormDefinitionRepository;
 use App\Repository\FormSubmissionRepository;
@@ -62,11 +62,14 @@ final class EndpointController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/form/endpoints/{id}/settings', name: 'app_admin_form_endpoint_settings', methods: ['GET', 'POST'])]
-    public function settings(FormDefinition $formDefinition, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/admin/form/endpoints/{id}/settings/general', name: 'app_admin_form_endpoint_general_settings', methods: ['GET', 'POST'])]
+    public function generalSettings(Request $request, FormDefinition $formDefinition, EntityManagerInterface $entityManager): Response
     {
         $endpointForm = $this->createForm(FormDefinitionType::class, $formDefinition, [
-            'action' => $this->generateUrl('app_admin_form_endpoint_settings', ['id' => $formDefinition->getId()]),
+            'action' => $this->generateUrl(
+                $request->attributes->get('_route'),
+                $request->attributes->get('_route_params'),
+            ),
         ]);
         $endpointForm->handleRequest($request);
 
@@ -75,7 +78,7 @@ final class EndpointController extends AbstractController
 
             $this->addFlash('success', t('flash.form_endpoint.updated'));
 
-            return $this->redirectToRoute('app_admin_form_endpoint_settings', ['id' => $formDefinition->getId()]);
+            return $this->redirectToRoute('app_admin_form_endpoint_general_settings', ['id' => $formDefinition->getId()]);
         }
 
         return $this->render('admin/form/endpoint/settings/general.html.twig', [
@@ -102,9 +105,8 @@ final class EndpointController extends AbstractController
 
         foreach ($notificationProviders as $provider) {
             /* @var $provider ProviderInterface */
-            dump($provider);
             $settings = $savedProviders[$provider->getName()]
-                ?? (new FormNotificationSettings())
+                ?? (new NotificationSettings())
                     ->setType($provider->getName())
             ;
             $settingsForms[$provider->getName()] = $this->createForm($provider->getConfigurationForm(), $settings);
@@ -114,7 +116,7 @@ final class EndpointController extends AbstractController
             foreach ($settingsForms as $form) {
                 $form->handleRequest($request);
                 if ($form->isSubmitted() && $form->isValid()) {
-                    /** @var FormNotificationSettings $notification */
+                    /** @var NotificationSettings $notification */
                     $notification = $form->getData();
                     if (!$notification->isEnabled() && !$notification->getId()) {
                         // If the notification is not enabled, and it's a new one, we don't need to save it

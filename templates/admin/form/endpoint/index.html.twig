@@ -23,7 +23,7 @@
             <twig:Table:Body>
                 {% for form in endpoints %}
                     <twig:Table:Row>
-                        <twig:Table:Cell>{{ form.name }}</twig:Table:Cell>
+                        <twig:Table:Cell class="font-medium">{{ form.name }}</twig:Table:Cell>
                         <twig:Table:Cell>
                             <a href="{{ url('app_form_endpoint_submit', {'uid': form.uid}) }}" class="link font-medium" target="_blank" data-turbo="false">
                                 {{ url('app_form_endpoint_submit', {'uid': form.uid}) }}

@@ -19,10 +19,15 @@ admin:
 flash:
     form_endpoint:
         created: 'Form endpoint created.'
+        notification_settings:
+            updated: 'Notification settings updated.'
         updated: 'Form endpoint updated.'
 help:
     form_endpoint:
         redirect_url: 'The URL to redirect to after the form is submitted. Defaults to UniForm "Thank You" page.'
+    admin:
+        form_endpoint:
+            general_settings: 'General settings for the form endpoint.'
 label:
     admin:
         form:
@@ -56,6 +61,16 @@ label:
         name: Name
         required: 'Is Required?'
         type: Type
+menu:
+    admin:
+        default:
+            form_endpoints: Forms
+            settings: Settings
+        form_endpoint:
+            settings: Settings
+            settings.general: General
+            settings.notifications: Notifications
+            submissions: Submissions
 message:
     admin:
         settings:

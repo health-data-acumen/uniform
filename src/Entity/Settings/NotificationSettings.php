@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Settings;
 
-use App\Repository\FormNotificationSettingsRepository;
+use App\Entity\FormDefinition;
+use App\Repository\Settings\NotificationSettingsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: FormNotificationSettingsRepository::class)]
+#[ORM\Entity(repositoryClass: NotificationSettingsRepository::class)]
 #[ORM\Table(name: 'form_notification_settings')]
-class FormNotificationSettings
+class NotificationSettings
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

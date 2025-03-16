@@ -8,32 +8,45 @@
 
 {% block body %}
     <div class="min-h-screen grid grid-rows-[auto_1fr]">
-        <header class="border-b border-neutral-200 shadow-xs">
-            <div class="max-w-(--breakpoint-xl) mx-auto flex items-center justify-between py-3">
+        <header class="border-b border-neutral-200">
+            <div class="max-w-(--breakpoint-lg) mx-auto flex items-center justify-between py-3">
                 <h1 class="text-2xl font-bold">UniForm</h1>
                 <a href="#">Logout</a>
             </div>
 
-            <nav>
-
+            {% set mainMenu = knp_menu_get('admin.default') %}
+            <nav class="border-t border-neutral-200">
+                <ul class="max-w-(--breakpoint-lg) mx-auto flex items-center gap-2">
+                    {# @var mainMenu \Knp\Menu\ItemInterface #}
+                    {% for item in mainMenu.children %}
+                        {% set isActive = item is knp_menu_current or item is knp_menu_ancestor %}
+                        <li class="py-2 border-b-2 {{ isActive ? 'border-b-primary-700' : 'border-b-transparent' }}">
+                            <a href="{{ item.uri }}" class="flex py-2 px-3 text-sm font-medium rounded {{ isActive ? 'text-neutral-700' : 'text-neutral-500' }} hover:bg-neutral-100 hover:text-neutral-600">
+                                {{ item.label|trans }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </nav>
         </header>
 
-        <main>
-            <div class="max-w-(--breakpoint-lg) mx-auto py-4 space-y-4">
-                {% block content %}
-                    {% block page_header %}
-                        <div class="py-3 border-b border-neutral-200">
+        <main class="bg-slate-50">
+            {% block content %}
+                {% block page_header %}
+                    <div class="py-4 border-b border-neutral-200 bg-white">
+                        <div class="max-w-(--breakpoint-lg) mx-auto">
                             {% block page_title_container %}
                                 <h2 class="text-3xl font-bold">{% block page_title %}{% endblock %}</h2>
                             {% endblock %}
                         </div>
-                    {% endblock %}
+                    </div>
+                {% endblock %}
 
+                <div class="max-w-(--breakpoint-lg) mx-auto py-4">
                     {% block page_content %}
                     {% endblock %}
-                {% endblock %}
-            </div>
+                </div>
+            {% endblock %}
 
             <div data-controller="turbo-modal">
                 <twig:Modal:Dialog

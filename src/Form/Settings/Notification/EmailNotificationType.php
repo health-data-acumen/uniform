@@ -2,11 +2,10 @@
 
 namespace App\Form\Settings\Notification;
 
-use App\Entity\FormNotificationSettings;
+use App\Entity\Settings\NotificationSettings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -52,7 +51,7 @@ class EmailNotificationType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => FormNotificationSettings::class,
+                'data_class' => NotificationSettings::class,
                 'label' => t('message.admin.settings.email_notification.label'),
                 'help' => t('message.admin.settings.email_notification.help'),
             ])

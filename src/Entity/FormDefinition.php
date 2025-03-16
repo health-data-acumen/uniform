@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Settings\NotificationSettings;
 use App\Repository\FormDefinitionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -56,9 +57,9 @@ class FormDefinition
     private Collection $submissions;
 
     /**
-     * @var Collection<int, FormNotificationSettings>
+     * @var Collection<int, NotificationSettings>
      */
-    #[ORM\OneToMany(targetEntity: FormNotificationSettings::class, mappedBy: 'form', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: NotificationSettings::class, mappedBy: 'form', orphanRemoval: true)]
     private Collection $notificationSettings;
 
     public function __construct()
@@ -202,14 +203,14 @@ class FormDefinition
     }
 
     /**
-     * @return Collection<int, FormNotificationSettings>
+     * @return Collection<int, NotificationSettings>
      */
     public function getNotificationSettings(): Collection
     {
         return $this->notificationSettings;
     }
 
-    public function addNotificationSetting(FormNotificationSettings $notificationSetting): static
+    public function addNotificationSetting(NotificationSettings $notificationSetting): static
     {
         if (!$this->notificationSettings->contains($notificationSetting)) {
             $this->notificationSettings->add($notificationSetting);
@@ -219,7 +220,7 @@ class FormDefinition
         return $this;
     }
 
-    public function removeNotificationSetting(FormNotificationSettings $notificationSetting): static
+    public function removeNotificationSetting(NotificationSettings $notificationSetting): static
     {
         if ($this->notificationSettings->removeElement($notificationSetting)) {
             // set the owning side to null (unless already changed)

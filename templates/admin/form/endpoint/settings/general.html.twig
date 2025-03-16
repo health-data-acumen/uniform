@@ -1,35 +1,18 @@
-{% extends 'admin/layout.html.twig' %}
+{% extends 'admin/form/endpoint/settings.html.twig' %}
 
-{% block page_title_container %}
-    <a href="{{ path('app_admin_form_endpoint_list') }}"
-       class="inline-flex items-center gap-2 mb-4 font-medium text-sm text-neutral-600 hover:text-neutral-700"
-    >
-        &leftarrow; {{ 'action.admin.back_to_list'|trans }}
-    </a>
+{% block settings_content %}
+    <div class="gap-4 rounded-lg bg-slate-100 p-1 border border-neutral-200">
+        <div class="px-4 py-2">
+            <h3 class="text-2xl font-bold mb-1">{{ 'title.admin.form.endpoint.settings.general'|trans }}</h3>
+            <p class="text-neutral-500 text-sm">{{ 'help.admin.form_endpoint.general_settings'|trans }}</p>
+        </div>
 
-    {{ parent() }}
-{% endblock %}
+        <div class="p-4 rounded-md border border-neutral-200 bg-white">
+            {{ form_start(endpointForm) }}
+                {{ form_widget(endpointForm) }}
 
-{% block page_title %}
-    {{ endpoint.name }}
-{% endblock %}
-
-{% block page_content %}
-    <div>
-        {{ include('admin/form/endpoint/_navbar.html.twig') }}
-
-        <div class="space-y-4 mt-4">
-            <h3 class="text-2xl font-bold mb-3">{{ 'title.admin.form.endpoint.settings.general'|trans }}</h3>
-
-            <div class="max-w-(--breakpoint-md)">
-                {{ form_start(endpointForm) }}
-                    {{ form_widget(endpointForm) }}
-
-                    <div>
-                        <button type="submit" class="btn btn-primary">{{ 'action.save'|trans }}</button>
-                    </div>
-                {{ form_end(endpointForm) }}
-            </div>
+                <button type="submit" class="btn btn-primary">{{ 'action.save'|trans }}</button>
+            {{ form_end(endpointForm) }}
         </div>
     </div>
 {% endblock %}

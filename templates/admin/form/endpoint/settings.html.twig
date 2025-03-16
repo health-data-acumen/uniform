@@ -18,17 +18,27 @@
     <div>
         {{ include('admin/form/endpoint/_navbar.html.twig') }}
 
-        <div class="space-y-4 mt-4">
-            <h3 class="text-2xl font-bold mb-3">{{ 'title.admin.form.endpoint.settings'|trans }}</h3>
+        <div class="grid grid-cols-4 gap-4 py-4">
+            <nav class="col-span-1">
+                {% set settingsMenu = knp_menu_get('admin.form_endpoint', ['menu.admin.form_endpoint.settings'], options: { endpoint }) %}
 
-            <div class="max-w-(--breakpoint-md)">
-                {{ form_start(endpointForm) }}
-                    {{ form_widget(endpointForm) }}
+                <ul class="flex flex-col gap-1">
+                    {% for item in settingsMenu %}
+                        {# @var item \Knp\Menu\ItemInterface #}
+                        {% set isActive = item is knp_menu_current %}
+                        <li>
+                            <a href="{{ item.uri }}"
+                               {% if isActive %} aria-current="page" {% endif %}
+                               class="flex py-2 px-4 rounded-sm text-sm font-medium text-neutral-600 hover:bg-neutral-100 hover:text-neutral-700 aria-[current=page]:bg-primary-100 aria-[current=page]:text-primary-700">
+                                {{ item.label|trans }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
 
-                    <div>
-                        <button type="submit" class="btn btn-primary">{{ 'action.save'|trans }}</button>
-                    </div>
-                {{ form_end(endpointForm) }}
+            <div class="col-span-3 @container">
+                {% block settings_content %}{% endblock %}
             </div>
         </div>
     </div>

@@ -1,20 +1,21 @@
+{# @var menu \Knp\Menu\ItemInterface #}
+{% set menu = knp_menu_get('admin.form_endpoint', options: { endpoint }) %}
+
 <nav>
-    <ul role="tablist" class="flex gap-6 mb-2 border-b border-neutral-200">
-        <li class="nav-item">
-            <a href="{{ path('app_admin_form_endpoint_submission_list', {'id': endpoint.id}) }}"
-                {% if app.current_route == 'app_admin_form_endpoint_submission_list' -%} aria-current="page" {%- endif %}
-               class="inline-flex gap-2 items-center text-neutral-500 font-medium p-3 border-b-2 border-transparent hover:border-neutral-200 hover:text-neutral-700 aria-[current=page]:text-primary-600 aria-[current=page]:border-primary-600"
-            >
-                {{ 'label.admin.form.endpoint.submissions'|trans }}
-            </a>
-        </li>
-        <li role="tab">
-            <a href="{{ path('app_admin_form_endpoint_settings', {'id': endpoint.id}) }}"
-               {% if app.current_route == 'app_admin_form_endpoint_settings' -%} aria-current="page" {%- endif %}
-               class="inline-flex gap-2 items-center text-neutral-500 font-medium p-3 border-b-2 border-transparent hover:border-neutral-200 hover:text-neutral-700 aria-[current=page]:text-primary-600 aria-[current=page]:border-primary-600"
-            >
-                {{ 'label.admin.form.endpoint.settings'|trans }}
-            </a>
-        </li>
+    <ul role="tablist" class="flex gap-2 mb-2 bg-slate-100 border border-slate-200 rounded-md p-1">
+        {% for item in menu.children %}
+            {% set isActive = item is knp_menu_current or item is knp_menu_ancestor %}
+            <li class="nav-item">
+                <a href="{{ item.uri }}"
+                    {% if isActive -%} aria-current="page" {%- endif %}
+                   class="{{ html_classes(
+                       'inline-flex gap-2 items-center text-neutral-500 text-sm font-medium rounded-sm transition-colors',
+                       'px-6 py-2 hover:bg-slate-100 hover:text-neutral-700 aria-[current=page]:text-primary-600 aria-[current=page]:bg-white'
+                   ) }}"
+                >
+                    {{ item.label|trans }}
+                </a>
+            </li>
+        {% endfor %}
     </ul>
 </nav>
