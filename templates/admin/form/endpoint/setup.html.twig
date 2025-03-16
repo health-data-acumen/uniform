@@ -1,0 +1,46 @@
+{% extends 'admin/form/endpoint/layout.html.twig' %}
+
+{% block content %}
+    <div class="gap-4 rounded-lg bg-slate-100 p-1 border border-neutral-200">
+        <div class="px-4 py-2">
+            <h3 class="text-2xl font-bold mb-1">{{ 'title.admin.form.endpoint.setup.endpoint_url'|trans }}</h3>
+            <p class="text-neutral-500 text-sm">{{ 'help.admin.form_endpoint.setup.endpoint_url'|trans }}</p>
+        </div>
+
+        <div class="p-4 rounded-md border border-neutral-200 bg-white">
+            <div data-controller="clipboard" class="flex items-center text-sm text-neutral-600">
+                <input
+                    type="url"
+                    name="url"
+                    value="{{- url('app_form_endpoint_submit', {'uid': endpoint.uid}) -}}"
+                    data-clipboard-target="source"
+                    class="form-control py-2 px-4 border-neutral-200 rounded-r-none"
+                    aria-label="Form endpoint URL"
+                    readonly
+                />
+
+                <button data-clipboard-target="button" data-action="clipboard#copy" class="inline-flex gap-2 items-end py-2 px-4 font-medium border border-l-0 border-neutral-200 rounded-r-md" title="{{ 'action.copy'|trans }}">
+                    {{ ux_icon('heroicons:clipboard-document-20-solid', {'class': 'size-5'}) }}
+                    <span>{{ 'action.copy'|trans }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="gap-4 rounded-lg bg-slate-100 p-1 border border-neutral-200">
+        <div class="px-4 py-2">
+            <h3 class="text-2xl font-bold mb-1">{{ 'title.admin.form.endpoint.setup.code_examples'|trans }}</h3>
+        </div>
+
+        <div class="p-1 rounded-md border border-neutral-200 bg-white">
+            {% apply spaceless %}
+                <pre class="language-html !text-sm" data-controller="highlight">
+                    <code class="language-html">
+                        {{- include('admin/form/endpoint/_setup.code.html.twig', {'endpointUrl': url('app_form_endpoint_submit', {'uid': endpoint.uid})})|escape -}}
+                    </code>
+                </pre>
+            {% endapply %}
+        </div>
+    </div>
+
+{% endblock %}

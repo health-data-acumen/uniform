@@ -25,7 +25,7 @@ final class EndpointController extends AbstractController
     public function index(FormDefinitionRepository $repository): Response
     {
         return $this->render('admin/form/endpoint/index.html.twig', [
-            'endpoints' => $repository->findAll(),
+            'endpoints' => $repository->getEndpoints(),
         ]);
     }
 
@@ -49,6 +49,14 @@ final class EndpointController extends AbstractController
 
         return $this->render('admin/form/endpoint/new.html.twig', [
             'endpointForm' => $endpointForm->createView(),
+        ]);
+    }
+
+    #[Route('/admin/form/endpoints/{id}/setup', name: 'app_admin_form_endpoint_setup', methods: ['GET', 'POST'])]
+    public function setup(FormDefinition $formDefinition): Response
+    {
+        return $this->render('admin/form/endpoint/setup.html.twig', [
+            'endpoint' => $formDefinition,
         ]);
     }
 

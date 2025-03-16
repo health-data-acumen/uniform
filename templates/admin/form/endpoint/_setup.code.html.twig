@@ -1,0 +1,28 @@
+<form
+    action="{{ endpointUrl }}"
+    method="post"
+>
+    <div class="mb-4">
+        <label for="name" class="form-label required">Name</label>
+        <input type="text" name="name" id="name" class="form-control" required>
+    </div>
+    <div class="mb-4">
+        <label for="email" class="form-label required">Email</label>
+        <input type="email" name="email" id="email" class="form-control" required>
+    </div>
+    <div class="mb-4">
+        <label for="message" class="form-label required">Message</label>
+        <textarea name="message" id="message" class="form-control" required></textarea>
+    </div>
+    <div class="mb-4">
+        <label for="attachment" class="form-label">Attachment</label>
+        <input type="file" name="attachment" id="attachment" accept="application/pdf" class="form-control">
+    </div>
+    <div class="mb-4">
+        <label for="subscribe" class="form-label flex items-center gap-2">
+            <input type="checkbox" name="subscribe" id="subscribe" class="form-checkbox">
+            Send me updates about my submission
+        </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

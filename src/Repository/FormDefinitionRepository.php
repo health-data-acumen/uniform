@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Dto\FormEndpointDto;
 use App\Entity\FormDefinition;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,28 +17,16 @@ class FormDefinitionRepository extends ServiceEntityRepository
         parent::__construct($registry, FormDefinition::class);
     }
 
-    //    /**
-    //     * @return FormDefinition[] Returns an array of FormDefinition objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('f')
-    //            ->andWhere('f.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('f.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?FormDefinition
-    //    {
-    //        return $this->createQueryBuilder('f')
-    //            ->andWhere('f.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * @return FormEndpointDto[]
+     */
+    public function getEndpoints(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->select('NEW App\Dto\FormEndpointDto(f.id, f.name, f.enabled, COUNT(s.id) as submissionsCount)')
+            ->leftJoin('f.submissions', 's')
+            ->groupBy('f.id')
+            ->getQuery()
+            ->getResult();
+    }
 }

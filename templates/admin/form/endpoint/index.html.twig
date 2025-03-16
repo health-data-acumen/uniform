@@ -15,7 +15,7 @@
         <twig:Table:Root>
             <twig:Table:Header>
                 <twig:Table:Head>{{ 'label.form.endpoint.name'|trans }}</twig:Table:Head>
-                <twig:Table:Head>{{ 'label.form.endpoint.url'|trans }}</twig:Table:Head>
+                <twig:Table:Head>{{ 'label.form.endpoint.enabled'|trans }}</twig:Table:Head>
                 <twig:Table:Head>{{ 'label.form.endpoint.submissions'|trans }}</twig:Table:Head>
                 <twig:Table:Head>{{ 'label.form.endpoint.actions'|trans }}</twig:Table:Head>
             </twig:Table:Header>
@@ -25,17 +25,31 @@
                     <twig:Table:Row>
                         <twig:Table:Cell class="font-medium">{{ form.name }}</twig:Table:Cell>
                         <twig:Table:Cell>
-                            <a href="{{ url('app_form_endpoint_submit', {'uid': form.uid}) }}" class="link font-medium" target="_blank" data-turbo="false">
-                                {{ url('app_form_endpoint_submit', {'uid': form.uid}) }}
-                            </a>
+                            {% if form.isActive %}
+                                <div class="flex items-center gap-2">
+                                    {{ ux_icon('heroicons:check-circle-20-solid', {'class': 'size-5 text-green-600'}) }}
+                                    <span >{{ 'label.yes'|trans }}</span>
+                                </div>
+                            {% else %}
+                            <div class="flex items-center gap-2">
+                                {{ ux_icon('heroicons:x-circle-20-solid', {'class': 'size-5 text-destructive-600'}) }}
+                                <span>{{ 'label.no'|trans }}</span>
+                            </div>
+                            {% endif %}
                         </twig:Table:Cell>
-                        <twig:Table:Cell>{{ 0 }}</twig:Table:Cell>
+                        <twig:Table:Cell>{{ form.submissionsCount }}</twig:Table:Cell>
                         <twig:Table:Cell>
-                            <a href="{{ path('app_admin_form_endpoint_submission_list', {'id': form.id}) }}" class="link font-medium no-underline">
-                                {{ 'label.form.endpoint.details'|trans }}
-                            </a>
+                            <div class="flex gap-2 items-center">
+                                <a href="{{ path('app_admin_form_endpoint_submission_list', {'id': form.id}) }}"
+                                   class="link font-medium no-underline"
+                                >
+                                    {{ 'label.form.endpoint.details'|trans }}
+                                </a>
 
-                            <a href="#">{{ 'label.form.endpoint.delete'|trans }}</a>
+                                <a href="#" class="text-destructive-600 font-medium">
+                                    {{ 'label.form.endpoint.delete'|trans }}
+                                </a>
+                            </div>
                         </twig:Table:Cell>
                     </twig:Table:Row>
                 {% else %}

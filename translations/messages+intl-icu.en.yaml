@@ -6,6 +6,7 @@ action:
                 show_submission_details: 'Show Submission Details'
     cancel: Cancel
     close: Close
+    copy: Copy
     form:
         create: 'Create Form'
         endpoint:
@@ -29,6 +30,8 @@ help:
     admin:
         form_endpoint:
             general_settings: 'General settings for the form endpoint.'
+            setup:
+                endpoint_url: 'Place this URL in the action attribute of your form, and set the method to POST to submit the form data to the endpoint.'
     form_endpoint:
         redirect_url: 'The URL to redirect to after the form is submitted. Defaults to UniForm "Thank You" page.'
 label:
@@ -61,6 +64,7 @@ label:
             delete: Delete
             details: Details
             edit: Edit
+            enabled: Enabled
             name: Name
             no_endpoints: 'You have not created any form endpoints yet.'
             submissions: Submissions
@@ -74,6 +78,8 @@ label:
         name: Name
         required: 'Is Required?'
         type: Type
+    'no': 'No'
+    'yes': 'Yes'
 menu:
     admin:
         default:
@@ -83,6 +89,7 @@ menu:
             settings: Settings
             settings.general: General
             settings.notifications: Notifications
+            setup: Setup
             submissions: Submissions
 message:
     admin:
@@ -100,5 +107,8 @@ title:
                 settings: Settings
                 settings.general: General
                 settings.notifications: Notifications
+                setup:
+                    code_examples: 'Code Examples'
+                    endpoint_url: 'Endpoint URL'
                 submissions: Submissions
     welcome: 'Welcome to UniForm!'

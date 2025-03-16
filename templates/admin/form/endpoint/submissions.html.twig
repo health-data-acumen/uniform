@@ -1,75 +1,56 @@
-{% extends 'admin/layout.html.twig' %}
+{% extends 'admin/form/endpoint/layout.html.twig' %}
 
-{% block page_title_container %}
-    <a href="{{ path('app_admin_form_endpoint_list') }}"
-       class="inline-flex items-center gap-2 mb-4 font-medium text-sm text-neutral-600 hover:text-neutral-700"
-    >
-        &leftarrow; {{ 'action.admin.back_to_list'|trans }}
-    </a>
+{% block content %}
+    <div class="space-y-4 mt-4">
+        <h3 class="text-2xl font-bold mb-3">{{ 'title.admin.form.endpoint.submissions'|trans }}</h3>
 
-    {{ parent() }}
-{% endblock %}
-
-{% block page_title %}
-    {{ endpoint.name }}
-{% endblock %}
-
-{% block page_content %}
-    <div>
-        {{ include('admin/form/endpoint/_navbar.html.twig') }}
-
-        <div class="space-y-4 mt-4">
-            <h3 class="text-2xl font-bold mb-3">{{ 'title.admin.form.endpoint.submissions'|trans }}</h3>
-
-
-            <div class="space-y-4">
-                {% for submission in submissions %}
-                    <div data-controller="collapse"
-                         data-collapse-open-value="false"
-                         class="group text-sm border border-neutral-200 rounded-lg bg-white"
-                    >
-                        <div class="flex items-center gap-4 px-4 py-3">
-                            <div class="self-start">
-                                <label for="select-{{ submission.id }}">
-                                    <span class="sr-only">{{ 'label.admin.form.endpoint.select_submission'|trans }}</span>
-                                    <input type="checkbox" id="select-{{ submission.id }}" name="submissions[]" value="{{ submission.id }}" class="form-checkbox bg-white">
-                                </label>
-                            </div>
-                            <div class="grow grid grid-cols-3 gap-6 items-center">
-                                {% for column in columns %}
-                                    <p class="flex flex-col gap-1">
-                                        <span class="font-medium">{{ column|title }}</span>
-                                        {{ submission.payload[column] }}
-                                    </p>
-                                {% endfor %}
-
+        <div class="space-y-4">
+            {% for submission in submissions %}
+                <div data-controller="collapse"
+                     data-collapse-open-value="false"
+                     class="group text-sm border border-neutral-200 rounded-lg bg-white"
+                >
+                    <div class="flex items-center gap-4 px-4 py-3">
+                        <div class="self-start">
+                            <label for="select-{{ submission.id }}">
+                                <span class="sr-only">{{ 'label.admin.form.endpoint.select_submission'|trans }}</span>
+                                <input type="checkbox" id="select-{{ submission.id }}" name="submissions[]" value="{{ submission.id }}" class="form-checkbox bg-white">
+                            </label>
+                        </div>
+                        <div class="grow grid grid-cols-3 gap-6 items-center">
+                            {% for column in columns %}
                                 <p class="flex flex-col gap-1">
-                                    <span class="font-medium">{{ 'label.admin.form.endpoint.submission_date'|trans }}</span>
-                                    {{ submission.submittedAt|date('M d, Y') }}
+                                    <span class="font-medium">{{ column|title }}</span>
+                                    {{ submission.payload[column] }}
                                 </p>
-                            </div>
+                            {% endfor %}
 
-                            <div>
-                                <button data-action="collapse#toggle" class="p-2 rounded-md text-neutral-600 hover:text-neutral-700 hover:bg-neutral-100">
-                                    {{ ux_icon('heroicons:chevron-down-20-solid', {'class': 'size-6 transition-transform duration-300 in-aria-[expanded=true]:-rotate-180'}) }}
-                                    <span class="sr-only">{{ 'action.admin.form.endpoint.show_submission_details'|trans }}</span>
-                                </button>
-                            </div>
+                            <p class="flex flex-col gap-1">
+                                <span class="font-medium">{{ 'label.admin.form.endpoint.submission_date'|trans }}</span>
+                                {{ submission.submittedAt|date('M d, Y') }}
+                            </p>
                         </div>
 
-                        <div data-collapse-target="content" class="hidden p-4 border-t rounded-b-lg border-neutral-200 bg-white">
-                            <dl class="grid grid-cols-[auto_1fr] gap-x-8 gap-y-2 pl-8">
-                                {% for key, value in submission.payload %}
-                                    <div class="grid col-span-2 grid-cols-subgrid py-1">
-                                        <dt class="font-medium">{{ key|title }}</dt>
-                                        <dd>{{ value }}</dd>
-                                    </div>
-                                {% endfor %}
-                            </dl>
+                        <div>
+                            <button data-action="collapse#toggle" class="p-2 rounded-md text-neutral-600 hover:text-neutral-700 hover:bg-neutral-100">
+                                {{ ux_icon('heroicons:chevron-down-20-solid', {'class': 'size-6 transition-transform duration-300 in-aria-[expanded=true]:-rotate-180'}) }}
+                                <span class="sr-only">{{ 'action.admin.form.endpoint.show_submission_details'|trans }}</span>
+                            </button>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
+
+                    <div data-collapse-target="content" class="hidden p-4 border-t rounded-b-lg border-neutral-200 bg-white">
+                        <dl class="grid grid-cols-[auto_1fr] gap-x-8 gap-y-2 pl-8">
+                            {% for key, value in submission.payload %}
+                                <div class="grid col-span-2 grid-cols-subgrid py-1">
+                                    <dt class="font-medium">{{ key|title }}</dt>
+                                    <dd>{{ value }}</dd>
+                                </div>
+                            {% endfor %}
+                        </dl>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

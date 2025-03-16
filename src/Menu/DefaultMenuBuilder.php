@@ -39,6 +39,10 @@ readonly class DefaultMenuBuilder
         $routeParameters = ['id' => $endpoint->getId()];
 
         $menu = $this->factory->createItem('root');
+        $menu->addChild(t('menu.admin.form_endpoint.setup'), [
+            'route' => 'app_admin_form_endpoint_setup',
+            'routeParameters' => $routeParameters,
+        ]);
         $menu->addChild(t('menu.admin.form_endpoint.submissions'), [
             'route' => 'app_admin_form_endpoint_submission_list',
             'routeParameters' => $routeParameters,

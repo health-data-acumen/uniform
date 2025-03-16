@@ -35,4 +35,15 @@ return [
         'version' => '5.2.5',
         'type' => 'css',
     ],
+    'prismjs' => [
+        'version' => '1.30.0',
+    ],
+    'prismjs/themes/prism.min.css' => [
+        'version' => '1.30.0',
+        'type' => 'css',
+    ],
+    'prismjs/themes/prism-okaidia.min.css' => [
+        'version' => '1.30.0',
+        'type' => 'css',
+    ],
 ];
