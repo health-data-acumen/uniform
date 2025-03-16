@@ -23,7 +23,7 @@ readonly class DefaultMenuBuilder
         $menu = $this->factory->createItem('root');
 
         $menu->addChild(t('menu.admin.default.form_endpoints'), ['route' => 'app_admin_form_endpoint_list']);
-        $menu->addChild(t('menu.admin.default.settings'), ['uri' => '#']);
+        $menu->addChild(t('menu.admin.default.settings'), ['route' => 'app_admin_settings']);
 
         return $menu;
     }

@@ -23,13 +23,23 @@ flash:
             updated: 'Notification settings updated.'
         updated: 'Form endpoint updated.'
 help:
-    form_endpoint:
-        redirect_url: 'The URL to redirect to after the form is submitted. Defaults to UniForm "Thank You" page.'
     admin:
         form_endpoint:
             general_settings: 'General settings for the form endpoint.'
+    form_endpoint:
+        redirect_url: 'The URL to redirect to after the form is submitted. Defaults to UniForm "Thank You" page.'
 label:
     admin:
+        account_settings:
+            email_from_address: 'Email From Address'
+            email_from_name: 'Email From Name'
+            mail_sender: 'Mail Sender'
+            smtp_host: Host
+            smtp_password: Password
+            smtp_port: Port
+            smtp_server: 'SMTP Server'
+            smtp_user: User
+            mailer_encryption: Encryption
         form:
             endpoint:
                 select_submission: 'Select Submission'
@@ -79,6 +89,7 @@ message:
                 label: 'Email Notifications'
 title:
     admin:
+        account_settings: 'Account Settings'
         form:
             endpoint:
                 list: 'Form Endpoints'

@@ -137,6 +137,7 @@ final class EndpointController extends AbstractController
         return $this->render('admin/form/endpoint/settings/notifications.html.twig', [
             'endpoint' => $formDefinition,
             'settingsForms' => array_map(fn (FormInterface $form) => $form->createView(), $settingsForms),
+            'channels' => $notificationProviders,
         ], new Response(status: $request->isMethod('GET') ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

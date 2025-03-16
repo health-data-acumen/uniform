@@ -15,4 +15,8 @@ interface ProviderInterface
     public function triggerNotification(FormSubmission $formSubmission): void;
 
     public function getConfigurationForm(): string;
+
+    public function checkRequirements(): bool;
+
+    public function getRequirementsMessage(): ?string;
 }

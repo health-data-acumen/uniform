@@ -42,6 +42,9 @@ class AccountSettings
     #[Assert\Email]
     private ?string $emailFromAddress = null;
 
+    #[ORM\Column(length: 16, nullable: true)]
+    private ?string $mailerEncryption = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -115,6 +118,18 @@ class AccountSettings
     public function setEmailFromAddress(?string $emailFromAddress): static
     {
         $this->emailFromAddress = $emailFromAddress;
+
+        return $this;
+    }
+
+    public function getMailerEncryption(): ?string
+    {
+        return $this->mailerEncryption;
+    }
+
+    public function setMailerEncryption(?string $mailerEncryption): static
+    {
+        $this->mailerEncryption = $mailerEncryption;
 
         return $this;
     }
