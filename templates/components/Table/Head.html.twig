@@ -1,5 +1,9 @@
 {# @var attributes \Symfony\UX\TwigComponent\ComponentAttributes #}
 
+{% props label = null %}
+
 <th class="{{ tw_merge('px-4 py-3 text-left align-middle font-medium text-neutral-600', attributes.render('class')) }}" {{ attributes }}>
-    {% block content %}{% endblock %}
+    {%- block content -%}
+        {{ label }}
+    {%- endblock -%}
 </th>

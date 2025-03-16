@@ -24,7 +24,11 @@
                 {% for form in endpoints %}
                     <twig:Table:Row>
                         <twig:Table:Cell>{{ form.name }}</twig:Table:Cell>
-                        <twig:Table:Cell>{{ 'https://example.com' }}</twig:Table:Cell>
+                        <twig:Table:Cell>
+                            <a href="{{ url('app_form_endpoint_submit', {'uid': form.uid}) }}" class="link font-medium" target="_blank" data-turbo="false">
+                                {{ url('app_form_endpoint_submit', {'uid': form.uid}) }}
+                            </a>
+                        </twig:Table:Cell>
                         <twig:Table:Cell>{{ 0 }}</twig:Table:Cell>
                         <twig:Table:Cell>
                             <a href="{{ path('app_admin_form_endpoint_submission_list', {'id': form.id}) }}" class="link font-medium no-underline">

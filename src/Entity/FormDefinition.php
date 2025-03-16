@@ -35,15 +35,30 @@ class FormDefinition
     #[ORM\Column(type: UuidType::NAME, length: 255)]
     private ?Uuid $uid = null;
 
+    #[ORM\Column]
+    private ?bool $enabled = true;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(allowNull: true)]
+    #[Assert\Url]
+    private ?string $redirectUrl = null;
+
     /**
      * @var Collection<int, FormField>
      */
     #[ORM\OneToMany(targetEntity: FormField::class, mappedBy: 'form', orphanRemoval: true)]
     private Collection $fields;
 
+    /**
+     * @var Collection<int, FormSubmission>
+     */
+    #[ORM\OneToMany(targetEntity: FormSubmission::class, mappedBy: 'form', orphanRemoval: true)]
+    private Collection $submissions;
+
     public function __construct()
     {
         $this->fields = new ArrayCollection();
+        $this->submissions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -123,5 +138,59 @@ class FormDefinition
         if (null === $this->uid) {
             $this->uid = Uuid::v7();
         }
+    }
+
+    /**
+     * @return Collection<int, FormSubmission>
+     */
+    public function getSubmissions(): Collection
+    {
+        return $this->submissions;
+    }
+
+    public function addSubmission(FormSubmission $submission): static
+    {
+        if (!$this->submissions->contains($submission)) {
+            $this->submissions->add($submission);
+            $submission->setForm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubmission(FormSubmission $submission): static
+    {
+        if ($this->submissions->removeElement($submission)) {
+            // set the owning side to null (unless already changed)
+            if ($submission->getForm() === $this) {
+                $submission->setForm(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): static
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getRedirectUrl(): ?string
+    {
+        return $this->redirectUrl;
+    }
+
+    public function setRedirectUrl(?string $redirectUrl): static
+    {
+        $this->redirectUrl = $redirectUrl;
+
+        return $this;
     }
 }

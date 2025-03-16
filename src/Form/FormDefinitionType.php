@@ -4,9 +4,10 @@ namespace App\Form;
 
 use App\Entity\FormDefinition;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,24 +24,29 @@ class FormDefinitionType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => t('label.form.name'),
             ])
-            ->add('description', TextareaType::class, [
-                'label' => t('label.form.description'),
-                'required' => false,
-            ])
         ;
 
-        /*
         if ($formDefinition?->getId()) {
             $builder
+                ->add('enabled', CheckboxType::class, [
+                    'label' => t('label.form_endpoint.enabled'),
+                    'required' => false,
+                ])
+                ->add('redirectUrl', UrlType::class, [
+                    'label' => t('label.form_endpoint.redirect_url'),
+                    'help' => t('help.form_endpoint.redirect_url'),
+                    'required' => false,
+                ])
+                /*
                 ->add('fields', CollectionType::class, [
                     'entry_type' => FormFieldType::class,
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,
                 ])
+                */
             ;
         }
-        */
     }
 
     public function configureOptions(OptionsResolver $resolver): void

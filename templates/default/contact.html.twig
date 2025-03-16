@@ -1,0 +1,43 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Contact Us
+{% endblock %}
+
+{% block main %}
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="w-full max-w-(--breakpoint-sm) mx-auto p-4 border border-neutral-200 rounded">
+            <h1 class="text-2xl font-bold mb-4">Contact Us</h1>
+            <p class="mb-4">Please fill out the form below to contact us.</p>
+
+            <div>
+                <form action="https://localhost:8000/e/01959c1e-701f-7c84-b4cb-08cee20cd84c" method="post" enctype="multipart/form-data">
+                    <div class="mb-4">
+                        <label for="name" class="form-label required">Name</label>
+                        <input type="text" name="name" id="name" class="form-control" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="form-label required">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="message" class="form-label required">Message</label>
+                        <textarea name="message" id="message" class="form-control" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="attachment" class="form-label">Attachment</label>
+                        <input type="file" name="attachment" id="attachment" accept="application/pdf" class="form-control">
+                    </div>
+                    <div class="mb-4">
+                        <label for="subscribe" class="form-label flex items-center gap-2">
+                            <input type="checkbox" name="subscribe" id="subscribe" class="form-checkbox">
+                            Send me updates about my submission
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

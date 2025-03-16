@@ -5,6 +5,8 @@ namespace App\Controller\Admin\Form;
 use App\Entity\FormDefinition;
 use App\Form\FormDefinitionType;
 use App\Repository\FormDefinitionRepository;
+use App\Repository\FormSubmissionRepository;
+use App\Service\FormEndpoint\SubmissionService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,11 +49,12 @@ final class EndpointController extends AbstractController
     }
 
     #[Route('/admin/form/endpoints/{id}/submissions', name: 'app_admin_form_endpoint_submission_list', methods: ['GET', 'POST'])]
-    public function submissions(FormDefinition $formDefinition): Response
+    public function submissions(FormDefinition $formDefinition, FormSubmissionRepository $submissionRepository, SubmissionService $submissionService): Response
     {
         return $this->render('admin/form/endpoint/submissions.html.twig', [
             'endpoint' => $formDefinition,
-            'submissions' => [],
+            'submissions' => $submissionRepository->findBy(['form' => $formDefinition]),
+            'columns' => $submissionService->getPriorityFormFields($formDefinition),
         ]);
     }
 

@@ -1,6 +1,9 @@
 action:
     admin:
         back_to_list: 'Back to List'
+        form:
+            endpoint:
+                show_submission_details: 'Show Submission Details'
     cancel: Cancel
     close: Close
     form:
@@ -21,7 +24,9 @@ label:
     admin:
         form:
             endpoint:
+                select_submission: 'Select Submission'
                 settings: Settings
+                submission_date: 'Submitted On'
                 submissions: Submissions
     form:
         description: Description
@@ -35,6 +40,9 @@ label:
             submissions: Submissions
             url: 'Endpoint URL'
         name: Name
+    form_endpoint:
+        enabled: 'Is Enabled?'
+        redirect_url: 'Redirect URL'
     form_field:
         label: Label
         name: Name
@@ -48,4 +56,7 @@ title:
                 new: 'New Form Endpoint'
                 settings: Settings
                 submissions: Submissions
-    welcome: Welcome to UniForm!
+    welcome: 'Welcome to UniForm!'
+help:
+    form_endpoint:
+        redirect_url: 'The URL to redirect to after the form is submitted. Defaults to UniForm "Thank You" page.'

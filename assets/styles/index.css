@@ -29,6 +29,13 @@
 }
 
 @layer base {
+  button,
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"] {
+    cursor: pointer;
+  }
+
   input,
   select,
   textarea {
