@@ -50,6 +50,10 @@
                         </dl>
                     </div>
                 </div>
+            {% else %}
+                <div class="text-center text-slate-500 p-4 bg-white rounded-lg border border-neutral-200">
+                    {{ 'message.admin.form.endpoint.no_submissions'|trans }}
+                </div>
             {% endfor %}
         </div>
     </div>

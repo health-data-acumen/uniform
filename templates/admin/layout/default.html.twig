@@ -11,7 +11,12 @@
         <header class="border-b border-neutral-200">
             <div class="max-w-(--breakpoint-lg) mx-auto flex items-center justify-between py-3">
                 <h1 class="text-2xl font-bold">UniForm</h1>
-                <a href="#">Logout</a>
+                <form action="{{ path('app_security_logout') }}" method="post">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}" />
+                    <button type="submit" class="px-3 py-1.5 text-sm font-medium text-slate-700 rounded-md hover:bg-slate-100 hover:text-slate-800">
+                        {{ 'action.security.logout'|trans }}
+                    </button>
+                </form>
             </div>
 
             {% set mainMenu = knp_menu_get('admin.default') %}

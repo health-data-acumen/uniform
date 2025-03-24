@@ -55,7 +55,7 @@ readonly class SubmissionService
             }
         }
 
-        if (empty($columns)) {
+        if (empty($columns) && !empty($keys)) {
             $columns[] = $keys[0];
         }
 

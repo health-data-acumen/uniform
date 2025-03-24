@@ -62,6 +62,10 @@ class FormDefinition
     #[ORM\OneToMany(targetEntity: NotificationSettings::class, mappedBy: 'form', orphanRemoval: true)]
     private Collection $notificationSettings;
 
+    #[ORM\ManyToOne(inversedBy: 'formEndpoints')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $owner = null;
+
     public function __construct()
     {
         $this->fields = new ArrayCollection();
@@ -228,6 +232,18 @@ class FormDefinition
                 $notificationSetting->setForm(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }

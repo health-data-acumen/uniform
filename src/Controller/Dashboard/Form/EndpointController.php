@@ -39,6 +39,7 @@ final class EndpointController extends AbstractController
         $endpointForm->handleRequest($request);
 
         if ($endpointForm->isSubmitted() && $endpointForm->isValid()) {
+            $endpoint->setOwner($this->getUser());
             $entityManager->persist($endpoint);
             $entityManager->flush();
 

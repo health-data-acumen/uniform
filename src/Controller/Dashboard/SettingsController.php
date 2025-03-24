@@ -15,7 +15,7 @@ final class SettingsController extends AbstractController
     #[Route('/dashboard/settings', name: 'app_dashboard_settings', methods: ['GET', 'POST'])]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $settings = $entityManager->getRepository(AccountSettings::class)->findOneBy([]) ?? new AccountSettings();
+        $settings = $entityManager->getRepository(AccountSettings::class)->findOneBy(['owner' => $this->getUser()]) ?? new AccountSettings();
         $settingsForm = $this->createForm(AccountSettingsType::class, $settings);
 
         $settingsForm->handleRequest($request);

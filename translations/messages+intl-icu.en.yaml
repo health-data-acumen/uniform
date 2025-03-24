@@ -12,6 +12,8 @@ action:
         endpoint:
             new: 'New Form Endpoint'
     save: Save
+    security:
+        logout: Logout
 admin:
     modal:
         loading: Loading...
@@ -105,6 +107,9 @@ message:
             email_notification:
                 help: 'Email notifications are sent to the target email address when a form is submitted.'
                 label: 'Email Notifications'
+        form:
+            endpoint:
+                no_submissions: 'There are no submissions for this form.'
 title:
     admin:
         account_settings: 'Account Settings'

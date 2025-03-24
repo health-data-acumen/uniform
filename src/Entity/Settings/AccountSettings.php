@@ -2,6 +2,7 @@
 
 namespace App\Entity\Settings;
 
+use App\Entity\User;
 use App\Repository\Settings\AccountSettingsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -44,6 +45,10 @@ class AccountSettings
 
     #[ORM\Column(length: 16, nullable: true)]
     private ?string $mailerEncryption = null;
+
+    #[ORM\OneToOne(inversedBy: 'accountSettings', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $owner = null;
 
     public function getId(): ?int
     {
@@ -130,6 +135,18 @@ class AccountSettings
     public function setMailerEncryption(?string $mailerEncryption): static
     {
         $this->mailerEncryption = $mailerEncryption;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(User $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }
