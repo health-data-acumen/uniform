@@ -17,6 +17,9 @@ admin:
         loading: Loading...
     title:
         dashboard: Dashboard
+description:
+    security:
+        login: 'Welcome back! Please log in to access your account.'
 email:
     submission:
         notification_subject: 'New submission for {form}'
@@ -79,6 +82,11 @@ label:
         required: 'Is Required?'
         type: Type
     'no': 'No'
+    security:
+        email: Email
+        hide_password: 'Hide Password'
+        password: Password
+        show_password: 'Show Password'
     'yes': 'Yes'
 menu:
     admin:
@@ -111,4 +119,6 @@ title:
                     code_examples: 'Code Examples'
                     endpoint_url: 'Endpoint URL'
                 submissions: Submissions
+    security:
+        login: 'Log In'
     welcome: 'Welcome to UniForm!'

@@ -209,7 +209,7 @@
   }
 
   .form-control {
-    @apply block w-full outline-none rounded px-3 py-1.5
+    @apply block w-full outline-none rounded-md px-3 py-1.5
     text-neutral-700 text-sm
     border border-neutral-300
     placeholder:opacity-60
