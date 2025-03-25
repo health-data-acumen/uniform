@@ -20,7 +20,7 @@ final class DefaultController extends AbstractController
         return $this->render('default/contact.html.twig');
     }
 
-    #[Route('/thank-you', name: 'app_form_submit_success', env: 'dev')]
+    #[Route('/thank-you', name: 'app_form_submit_success')]
     public function submitSuccess(): Response
     {
         return $this->render('default/form/submit_success.html.twig');
