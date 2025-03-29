@@ -23,6 +23,7 @@ readonly class EmailBuilder
         return (new TemplatedEmail())
             ->subject($this->translator->trans('email.submission.notification_subject', ['form' => $formSubmission->getForm()->getName()]))
             ->htmlTemplate('email/submission_notification.html.twig')
+            ->textTemplate('email/submission_notification.md.twig')
             ->context($context)
         ;
     }

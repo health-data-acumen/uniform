@@ -1,0 +1,12 @@
+# New submission for {{ formName }}
+
+A new submission has been received for {{ formName }}.
+
+## Details
+
+|    Field    |     Value    |
+|-------------|--------------|
+{% for field, answer in answers %}
+| {{ field }} | {{ answer }} |
+{% endfor %}
+
