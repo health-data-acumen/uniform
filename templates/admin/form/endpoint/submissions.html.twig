@@ -17,11 +17,11 @@
                                 <input type="checkbox" id="select-{{ submission.id }}" name="submissions[]" value="{{ submission.id }}" class="form-checkbox bg-white">
                             </label>
                         </div>
-                        <div class="grow grid grid-cols-3 gap-6 items-center">
+                        <div class="grow grid grid-cols-3 gap-6 items-start">
                             {% for column in columns %}
                                 <p class="flex flex-col gap-1">
                                     <span class="font-medium">{{ column|title }}</span>
-                                    {{ submission.payload[column] }}
+                                    {{ submission.payload[column]|u.truncate(85, '...') }}
                                 </p>
                             {% endfor %}
 
