@@ -3,6 +3,8 @@ action:
         back_to_list: 'Back to List'
         form:
             endpoint:
+                next_page: Next
+                previous_page: Previous
                 show_submission_details: 'Show Submission Details'
     cancel: Cancel
     close: Close
@@ -103,13 +105,13 @@ menu:
             submissions: Submissions
 message:
     admin:
+        form:
+            endpoint:
+                no_submissions: 'There are no submissions for this form.'
         settings:
             email_notification:
                 help: 'Email notifications are sent to the target email address when a form is submitted.'
                 label: 'Email Notifications'
-        form:
-            endpoint:
-                no_submissions: 'There are no submissions for this form.'
 title:
     admin:
         account_settings: 'Account Settings'

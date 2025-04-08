@@ -10,6 +10,8 @@ use App\Repository\FormSubmissionRepository;
 use App\Service\FormEndpoint\SubmissionService;
 use App\Service\Notification\ChannelInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Form\FormInterface;
@@ -66,12 +68,23 @@ final class EndpointController extends AbstractController
     }
 
     #[Route('/dashboard/forms/{id}/submissions', name: 'app_dashboard_form_endpoint_submission_list', methods: ['GET', 'POST'])]
-    public function submissions(FormDefinition $formDefinition, FormSubmissionRepository $submissionRepository, SubmissionService $submissionService): Response
-    {
+    public function submissions(
+        Request $request,
+        FormDefinition $formDefinition,
+        FormSubmissionRepository $submissionRepository,
+        SubmissionService $submissionService,
+    ): Response {
+        $paginator = new Pagerfanta(new QueryAdapter($submissionRepository->buildSelectQuery($formDefinition)));
+        $paginator->setMaxPerPage($this->getParameter('app.submission.max_per_page'));
+        $paginator->setCurrentPage($request->get('page', 1));
+
         return $this->render('admin/form/endpoint/submissions.html.twig', [
             'endpoint' => $formDefinition,
-            'submissions' => $submissionRepository->findBy(['form' => $formDefinition]),
+            // 'submissions' => $submissionRepository->findBy(['form' => $formDefinition]),
+            // 'submissions' => $paginator->autoPagingIterator(),
+            'submissions' => $paginator->getCurrentPageResults(),
             'columns' => $submissionService->getPriorityFormFields($formDefinition),
+            'paginator' => $paginator,
         ]);
     }
 

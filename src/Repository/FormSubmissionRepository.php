@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\FormDefinition;
 use App\Entity\FormSubmission;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -25,5 +27,16 @@ class FormSubmissionRepository extends ServiceEntityRepository
         }
 
         return $submission;
+    }
+
+    public function buildSelectQuery(FormDefinition $formDefinition): QueryBuilder
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s', 'f')
+            ->join('s.form', 'f')
+            ->where('f.id = :form')
+            ->setParameter('form', $formDefinition)
+            ->orderBy('s.createdAt', 'DESC')
+        ;
     }
 }
