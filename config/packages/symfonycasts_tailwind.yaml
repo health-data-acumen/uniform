@@ -3,6 +3,6 @@ symfonycasts_tailwind:
     # Specify the EXACT version of Tailwind CSS you want to use
     binary_version: 'v4.0.14'
 
-when@dev:
-    symfonycasts_tailwind:
-        binary: 'node_modules/.bin/tailwindcss'
+# when@dev:
+    # symfonycasts_tailwind:
+        # binary: 'node_modules/.bin/tailwindcss'

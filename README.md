@@ -46,6 +46,30 @@ APP_SECRET=your_secret_key
 php bin/console doctrine:migrations:migrate
 ```
 
+### **4️⃣ Build Frontend Assets**
+The frontend assets are built with Tailwind CSS and Hotwire Stimulus using the `symfonycasts/tailwind-bundle`. Both the bundle binary and the npm Tailwind CLI operate on the same package; only the binary used changes. To build the styles run:
+
+```bash
+php bin/console tailwind:build
+```
+
+To enable automatic rebuild on file changes run:
+
+```bash
+php bin/console tailwind:build --watch
+```
+
+To use the npm Tailwind CLI instead, uncomment the `when@dev` section in `symfonycasts_tailwind.yaml` and add a `package.json` in the project root with the Tailwind CLI dev dependency, for example:
+
+```json
+{
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.14",
+    "tailwindcss": "^4.0.14"
+  }
+}
+```
+
 ### **5️⃣ Start the Server**
 ```sh
 symfony serve
