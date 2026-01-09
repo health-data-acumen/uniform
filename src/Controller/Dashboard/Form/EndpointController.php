@@ -3,6 +3,7 @@
 namespace App\Controller\Dashboard\Form;
 
 use App\Entity\FormDefinition;
+use App\Entity\FormSubmission;
 use App\Entity\Settings\NotificationSettings;
 use App\Form\FormDefinitionType;
 use App\Repository\FormDefinitionRepository;
@@ -180,5 +181,55 @@ final class EndpointController extends AbstractController
         $this->addFlash('success', t('flash.form_endpoint.deleted'));
 
         return $this->redirectToRoute('app_dashboard_form_endpoint_list');
+    }
+
+    #[Route('/dashboard/forms/{id}/submissions/bulk-delete', name: 'app_dashboard_form_endpoint_submissions_bulk_delete', methods: ['POST'])]
+    public function bulkDelete(
+        Request $request,
+        FormDefinition $formDefinition,
+        FormSubmissionRepository $submissionRepository,
+        EntityManagerInterface $entityManager,
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_OWNER', $formDefinition);
+
+        $submissionIds = $request->request->get('submission_ids', '');
+        
+        if (empty($submissionIds)) {
+            $this->addFlash('error', t('flash.submission.bulk_delete.no_selection'));
+            return $this->redirectToRoute('app_dashboard_form_endpoint_submission_list', ['id' => $formDefinition->getId()]);
+        }
+
+        // Parse comma-separated IDs
+        $ids = array_filter(array_map('intval', explode(',', $submissionIds)));
+        
+        if (empty($ids)) {
+            $this->addFlash('error', t('flash.submission.bulk_delete.invalid_ids'));
+            return $this->redirectToRoute('app_dashboard_form_endpoint_submission_list', ['id' => $formDefinition->getId()]);
+        }
+
+        // Fetch submissions and verify they belong to this form
+        $submissions = $submissionRepository->createQueryBuilder('s')
+            ->where('s.id IN (:ids)')
+            ->andWhere('s.form = :form')
+            ->setParameter('ids', $ids)
+            ->setParameter('form', $formDefinition)
+            ->getQuery()
+            ->getResult();
+
+        if (empty($submissions)) {
+            $this->addFlash('error', t('flash.submission.bulk_delete.not_found'));
+            return $this->redirectToRoute('app_dashboard_form_endpoint_submission_list', ['id' => $formDefinition->getId()]);
+        }
+
+        // Delete submissions
+        foreach ($submissions as $submission) {
+            $entityManager->remove($submission);
+        }
+        $entityManager->flush();
+
+        $count = count($submissions);
+        $this->addFlash('success', t('flash.submission.bulk_delete.success', ['count' => $count]));
+
+        return $this->redirectToRoute('app_dashboard_form_endpoint_submission_list', ['id' => $formDefinition->getId()]);
     }
 }
