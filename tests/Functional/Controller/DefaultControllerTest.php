@@ -12,7 +12,7 @@ final class DefaultControllerTest extends WebTestCase
         $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertPageTitleContains('Welcome');
+        $this->assertPageTitleContains('UniForm');
         $this->assertSelectorTextContains('h1', 'UniForm');
     }
 }
