@@ -1,0 +1,4 @@
+# Disable Tailwind CSS building check in test environment
+# Tests don't need actual CSS rendering
+symfonycasts_tailwind:
+    input_css: 'assets/styles/index.css'
