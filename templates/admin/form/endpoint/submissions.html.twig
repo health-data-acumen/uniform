@@ -1,22 +1,22 @@
 {% extends 'admin/form/endpoint/layout.html.twig' %}
 
 {% block content %}
-    <div class="space-y-4 mt-4" data-controller="bulk-actions">
+    <div class="space-y-4 mt-4" data-controller="bulk-select bulk-action">
         <h3 class="text-2xl font-bold mb-3">{{ 'title.admin.form.endpoint.submissions'|trans }}</h3>
 
         {# Bulk Actions Bar - Hidden by default, shown when items are selected #}
-        <div data-bulk-actions-target="button" class="hidden flex items-center gap-4 px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-lg">
+        <div data-bulk-action-target="button" class="hidden flex items-center gap-4 px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-lg">
             <div class="flex items-center gap-3">
-                <span data-bulk-actions-target="counter" class="text-sm font-medium text-neutral-700">0 selected</span>
+                <span data-bulk-action-target="counter" class="text-sm font-medium text-neutral-700">0 selected</span>
             </div>
             <div class="ml-auto">
                 <form method="post" 
                       action="{{ path('app_dashboard_form_endpoint_submissions_bulk_delete', {'id': endpoint.id}) }}"
                       data-turbo-confirm="{{ 'message.admin.form.endpoint.confirm_bulk_delete'|trans }}"
                       class="inline"
+                      data-bulk-action-target="form"
                 >
                     <input type="hidden" name="_token" value="{{ csrf_token('bulk_delete_submissions') }}">
-                    <input type="hidden" name="submission_ids" data-bulk-actions-target="submissionIds">
                     <button type="submit" class="btn btn-destructive inline-flex items-center gap-2">
                         {{ ux_icon('heroicons:trash-20-solid', {'class': 'size-5'}) }}
                         {{ 'action.admin.form.endpoint.bulk_delete'|trans }}
@@ -32,8 +32,8 @@
                     <label for="select-all" class="flex items-center gap-2 cursor-pointer">
                         <input type="checkbox" 
                                id="select-all" 
-                               data-bulk-actions-target="selectAll"
-                               data-action="bulk-actions#selectAllChanged"
+                               data-bulk-select-target="selectAll"
+                               data-action="bulk-select#selectAllChanged"
                                class="form-checkbox">
                         <span class="text-sm font-medium text-neutral-700">{{ 'action.admin.form.endpoint.select_all'|trans }}</span>
                     </label>
@@ -53,8 +53,8 @@
                                        id="select-{{ submission.id }}" 
                                        name="submissions[]" 
                                        value="{{ submission.id }}" 
-                                       data-bulk-actions-target="checkbox"
-                                       data-action="bulk-actions#checkboxChanged"
+                                       data-bulk-select-target="checkbox"
+                                       data-action="bulk-select#checkboxChanged"
                                        class="form-checkbox bg-white">
                             </label>
                         </div>
