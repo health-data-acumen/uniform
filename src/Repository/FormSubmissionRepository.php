@@ -39,4 +39,25 @@ class FormSubmissionRepository extends ServiceEntityRepository
             ->orderBy('s.createdAt', 'DESC')
         ;
     }
+
+    /**
+     * Find submissions by IDs that belong to the given form
+     *
+     * @param array<int> $ids
+     * @return list<FormSubmission>
+     */
+    public function findByIdsAndForm(array $ids, FormDefinition $formDefinition): array
+    {
+        if (empty($ids)) {
+            return [];
+        }
+
+        return $this->createQueryBuilder('s')
+            ->where('s.id IN (:ids)')
+            ->andWhere('s.form = :form')
+            ->setParameter('ids', $ids)
+            ->setParameter('form', $formDefinition)
+            ->getQuery()
+            ->getResult();
+    }
 }
